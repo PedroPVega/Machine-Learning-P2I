@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "GCJLDbbTsxI=",
+  "success": true,
+  "projectFilePath": "/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/Unsupervised_Learning.csproj",
+  "expectedPackageFiles": [
+    "/Users/ppvegaf/.nuget/packages/csvhelper/33.0.1/csvhelper.33.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

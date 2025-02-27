@@ -1,0 +1,17 @@
+/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/bin/Debug/net8.0/Unsupervised_Learning
+/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/bin/Debug/net8.0/Unsupervised_Learning.deps.json
+/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/bin/Debug/net8.0/Unsupervised_Learning.runtimeconfig.json
+/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/bin/Debug/net8.0/Unsupervised_Learning.dll
+/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/bin/Debug/net8.0/Unsupervised_Learning.pdb
+/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/obj/Debug/net8.0/Unsupervised_Learning.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/obj/Debug/net8.0/Unsupervised_Learning.AssemblyInfoInputs.cache
+/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/obj/Debug/net8.0/Unsupervised_Learning.AssemblyInfo.cs
+/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/obj/Debug/net8.0/Unsupervised_Learning.csproj.CoreCompileInputs.cache
+/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/obj/Debug/net8.0/Unsupervised_Learning.dll
+/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/obj/Debug/net8.0/refint/Unsupervised_Learning.dll
+/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/obj/Debug/net8.0/Unsupervised_Learning.pdb
+/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/obj/Debug/net8.0/Unsupervised_Learning.genruntimeconfig.cache
+/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/obj/Debug/net8.0/ref/Unsupervised_Learning.dll
+/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/bin/Debug/net8.0/CsvHelper.dll
+/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/obj/Debug/net8.0/Unsupervised_Learning.csproj.AssemblyReference.cache
+/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/obj/Debug/net8.0/Unsuperv.6F3E78FA.Up2Date
