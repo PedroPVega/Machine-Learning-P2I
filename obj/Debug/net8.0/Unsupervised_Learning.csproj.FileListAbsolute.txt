@@ -15,3 +15,4 @@
 /Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/bin/Debug/net8.0/CsvHelper.dll
 /Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/obj/Debug/net8.0/Unsupervised_Learning.csproj.AssemblyReference.cache
 /Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/obj/Debug/net8.0/Unsuperv.6F3E78FA.Up2Date
+/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/obj/Debug/net8.0/Unsupervised_Learning.sourcelink.json

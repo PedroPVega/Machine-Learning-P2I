@@ -1,29 +1,63 @@
 public class Subject
 {
     private static int NumberOfChannels = 19;
-    private static int NumberOfLocalMaxima = 10;
+    private static int NumberOfLocalMaxima = 17;
     private static int BarycentersId = -1;
     private static Random rdn = new Random();
     public int Id {get;private set;}
+
+    public int DesignatedClass {get; set;}
     public double[,,] SubjectData {get; set;}
 
-    public Subject()
+    public Subject(bool zeros = true)
     {
         Id = BarycentersId--;
         SubjectData = new double[NumberOfChannels, 2, NumberOfLocalMaxima];
-        SetSubCoords2Zero();
+        if (zeros)
+        {
+            SetSubCoords2Zero();
+        }
+        else
+        {
+            // Deuxième constructeur pour les barycentres
+            for (int i = 0; i < SubjectData.GetLength(0); i++)
+            {
+                for (int t = 0; t < SubjectData.GetLength(2); t++)
+                {   
+                    SubjectData[i,0,t] = rdn.NextDouble() * (230 - 30) + 30;
+                    SubjectData[i,1,t] = rdn.NextDouble() * (20 + 15) - 15;           
+                }
+            }
+        }
+        
     }
 
-    public Subject(Subject s) // meant for replacing barycenters with no points, create new random Barycenter
+    public Subject(Subject s, bool random = true) 
     {
-        Id = s.Id;
-        SubjectData = new double[s.SubjectData.GetLength(0), 2, s.SubjectData.GetLength(2)];
-        for (int i = 0; i < this.SubjectData.GetLength(0); i++)
+        if (random) // meant for replacing barycenters with no points, create new random Barycenter
         {
-            for (int j = 0; j < this.SubjectData.GetLength(2); j++)
+            Id = s.Id;
+            SubjectData = new double[s.SubjectData.GetLength(0), 2, s.SubjectData.GetLength(2)];
+            for (int i = 0; i < this.SubjectData.GetLength(0); i++)
             {
-                this.SubjectData[i,0,j] = rdn.NextDouble() * (230 - 10) + 10;
-                this.SubjectData[i,1,j] = rdn.NextDouble() * (20 + 15) - 15;
+                for (int j = 0; j < this.SubjectData.GetLength(2); j++)
+                {
+                    this.SubjectData[i,0,j] = rdn.NextDouble() * (230 - 10) + 10;
+                    this.SubjectData[i,1,j] = rdn.NextDouble() * (20 + 15) - 15;
+                }
+            }
+        }
+        else // meant for making copy of Subject to be Barycenter
+        {
+            Id = BarycentersId--;
+            SubjectData = new double[s.SubjectData.GetLength(0), 2, s.SubjectData.GetLength(2)];
+            for (int i = 0; i < this.SubjectData.GetLength(0); i++)
+            {
+                for (int j = 0; j < this.SubjectData.GetLength(2); j++)
+                {
+                    this.SubjectData[i,0,j] = s.SubjectData[i,0,j];
+                    this.SubjectData[i,1,j] = s.SubjectData[i,1,j];
+                }
             }
         }
     }
@@ -51,7 +85,6 @@ public class Subject
             for (int t = 0; t < 10; t++)
             {
                 minimum = minFreqs[t];
-                SubjectData[i,0,t] = 1.00;
                 SubjectData[i,0,t] = rdn.NextDouble() * (maxFreqs[t] - minimum) + minimum;
                     
                 minimum = minPower[t];
@@ -109,7 +142,7 @@ public class Subject
             values = line.Split(','); // Split by comma
             for (int j = 0; j < NumberOfChannels; j++) // 19 channels
             {
-                for (int t = 0; t < NumberOfLocalMaxima; t++) // 10 local maxima
+                for (int t = 0; t < NumberOfLocalMaxima; t++) 
                 {
                     SubjectData[j,0,t] = Convert.ToInt32(values[j*10 + t]);                        
                 }
@@ -121,7 +154,7 @@ public class Subject
                 
             for (int j = 0; j < NumberOfChannels; j++) // 19 channels
             {
-                for (int t = 0; t < NumberOfLocalMaxima; t++) // 10 local maxima
+                for (int t = 0; t < NumberOfLocalMaxima; t++) 
                 {
                     SubjectData[j,1,t] = Convert.ToDouble(values[j*10 + t]);                        
                 }
