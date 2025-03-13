@@ -110,6 +110,7 @@ public class Simulation
             selected = Convert.ToInt32(rdn.NextInt64(Subjects.Count));
             if (!alreadySelected.Contains(selected))
             {
+                alreadySelected.Add(selected);
                 Barycenters.Add(new Subject(Subjects[selected],false));
                 Console.WriteLine("Barycenter selected : " + Subjects[selected].ToString());
             }
@@ -148,10 +149,11 @@ public class Simulation
         // foreach subject
         foreach (Subject sub in Subjects)
         {
+            minDist = MaxDouble;
             for (int k = 0; k < K; k++)
             {
                 // foreach subject we calculate its distance to all barycenters
-                distances[k] = GetNorm1(Barycenters[k], sub);
+                distances[k] = GetNorm2(Barycenters[k], sub);
                 if(distances[k] < minDist)
                 {
                     minDist = distances[k];
@@ -184,8 +186,8 @@ public class Simulation
             UpdatePart2(bary, nbOfSubsPerClass[- bary.Id - 1]);
         }
         //Console.WriteLine("nb de points groupe 1 : {0}, groupe 2 : {1}, groupe 3 : {2}, groupe 4 : {3}, groupe 5 : {4}",nbOfSubsPerClass[0],nbOfSubsPerClass[1],nbOfSubsPerClass[2],nbOfSubsPerClass[3],nbOfSubsPerClass[4]);
-        Console.WriteLine("nb de points groupe 1 : {0}, groupe 2 : {1}, groupe 3 : {2}",nbOfSubsPerClass[0],nbOfSubsPerClass[1],nbOfSubsPerClass[2]);
-        //Console.WriteLine("nb de points groupe 1 : {0}, groupe 2 : {1}",nbOfSubsPerClass[0],nbOfSubsPerClass[1]);
+        //Console.WriteLine("nb de points groupe 1 : {0}, groupe 2 : {1}, groupe 3 : {2}",nbOfSubsPerClass[0],nbOfSubsPerClass[1],nbOfSubsPerClass[2]);
+        Console.WriteLine("nb de points groupe 1 : {0}, groupe 2 : {1}",nbOfSubsPerClass[0],nbOfSubsPerClass[1]);
         // ShowClasses(K);
         //Etape 4, réinitialiser le barycentre s'il n'a aucun point attribué
         for (int i = 0; i < nbOfSubsPerClass.Length; i++)
@@ -219,6 +221,7 @@ public class Simulation
         int nbLocMaxima = Barycenters[0].SubjectData.GetLength(2);
         double[,,] temp;
         int[] nbOfSubsPerClass = new int[K];
+        int closestBary;
         for (int k = 0; k < K; k++)
         {
             nbOfSubsPerClass[k] = 0;
@@ -226,18 +229,27 @@ public class Simulation
 
         for (int i = 0; i < Mat.GetLength(0); i++)
         {
-            int closestBaryId = - Mat[i,1] + 1;
-            nbOfSubsPerClass[-closestBaryId]++;
+            closestBary = Mat[i,1];
+            nbOfSubsPerClass[closestBary-1] += 1;
 
             temp = GetSubjectCoordsById(Mat[i,0]);
             for (int j = 0; j < nbChannels; j++)
             {
                 for (int t = 0; t < nbLocMaxima; t++)
                 {
-                    Barycenters[-closestBaryId].SubjectData[j,0,t] += temp[j,0,t];
-                    Barycenters[-closestBaryId].SubjectData[j,1,t] += temp[j,1,t];
+                    Barycenters[closestBary - 1].SubjectData[j,0,t] += temp[j,0,t];
+                    Barycenters[closestBary - 1].SubjectData[j,1,t] += temp[j,1,t];
                 }
             }
+        }
+        int s = 0;
+        foreach (int item in nbOfSubsPerClass)
+        {
+            s += item;
+        }
+        if (!(s == 50))
+        {
+            Console.WriteLine("ERROR");
         }
         return nbOfSubsPerClass;
     }
@@ -309,13 +321,14 @@ public class Simulation
     public void Simulate(int K, int loops)
     {
         this.LoadData();
-        SelectSubjectsKPlus(K);
+        SelectSubjectsAsBarys(K);
         this.InitializeKMeans();
         for (int i = 0; i < loops; i++)
         {
             Console.WriteLine();
             Console.WriteLine("Boucle numéro : {0}", i+1);
             this.KmeansIteration(K);
+            //ShowBarycenters();
             //Console.WriteLine("Distance between barycenters : {0}", GetNorm1(Barycenters[0],Barycenters[1]));
         }
         
