@@ -12,4 +12,8 @@
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <SourceRoot Include="/Users/ppvegaf/.nuget/packages/" />
   </ItemGroup>
+  <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)sixlabors.imagesharp.web/3.1.4/build/SixLabors.ImageSharp.Web.props" Condition="Exists('$(NuGetPackageRoot)sixlabors.imagesharp.web/3.1.4/build/SixLabors.ImageSharp.Web.props')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.ml/4.0.2/build/netstandard2.0/Microsoft.ML.props" Condition="Exists('$(NuGetPackageRoot)microsoft.ml/4.0.2/build/netstandard2.0/Microsoft.ML.props')" />
+  </ImportGroup>
 </Project>

@@ -1,7 +1,7 @@
 public class Subject
 {
     private static int NumberOfChannels = 19;
-    private static int NumberOfLocalMaxima = 20;
+    private static int NumberOfLocalMaxima = 250;
     private static int BarycentersId = -1;
     private static Random rdn = new Random();
     public int Id {get;private set;}

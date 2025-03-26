@@ -153,7 +153,7 @@ public class Simulation
             for (int k = 0; k < K; k++)
             {
                 // foreach subject we calculate its distance to all barycenters
-                distances[k] = GetNorm2(Barycenters[k], sub);
+                distances[k] = GetNorm1(Barycenters[k], sub);
                 if(distances[k] < minDist)
                 {
                     minDist = distances[k];
@@ -187,7 +187,7 @@ public class Simulation
         }
         //Console.WriteLine("nb de points groupe 1 : {0}, groupe 2 : {1}, groupe 3 : {2}, groupe 4 : {3}, groupe 5 : {4}",nbOfSubsPerClass[0],nbOfSubsPerClass[1],nbOfSubsPerClass[2],nbOfSubsPerClass[3],nbOfSubsPerClass[4]);
         //Console.WriteLine("nb de points groupe 1 : {0}, groupe 2 : {1}, groupe 3 : {2}",nbOfSubsPerClass[0],nbOfSubsPerClass[1],nbOfSubsPerClass[2]);
-        Console.WriteLine("nb de points groupe 1 : {0}, groupe 2 : {1}",nbOfSubsPerClass[0],nbOfSubsPerClass[1]);
+        //Console.WriteLine("nb de points groupe 1 : {0}, groupe 2 : {1}",nbOfSubsPerClass[0],nbOfSubsPerClass[1]);
         // ShowClasses(K);
         //Etape 4, réinitialiser le barycentre s'il n'a aucun point attribué
         for (int i = 0; i < nbOfSubsPerClass.Length; i++)
@@ -321,17 +321,15 @@ public class Simulation
     public void Simulate(int K, int loops)
     {
         this.LoadData();
-        SelectSubjectsAsBarys(K);
+        SelectSubjectsKPlus(K);
         this.InitializeKMeans();
         for (int i = 0; i < loops; i++)
         {
-            Console.WriteLine();
-            Console.WriteLine("Boucle numéro : {0}", i+1);
+            //Console.WriteLine();
+            //Console.WriteLine("Boucle numéro : {0}", i+1);
             this.KmeansIteration(K);
-            //ShowBarycenters();
-            //Console.WriteLine("Distance between barycenters : {0}", GetNorm1(Barycenters[0],Barycenters[1]));
         }
-        
+        ShowClasses(K);
     }
 
     public void ShowClasses(int K)
