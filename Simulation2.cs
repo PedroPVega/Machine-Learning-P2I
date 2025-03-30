@@ -243,7 +243,7 @@ public class Simulation2
     {
         string[]? values;
         int[] vector = new int[785];
-        string filePath = "mnist_train.csv";
+        string filePath = "../mnist_train.csv";
         using (StreamReader reader = new StreamReader(filePath))
         {
             string? line = reader.ReadLine(); // Ignore first line, titles
