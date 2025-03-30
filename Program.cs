@@ -6,33 +6,44 @@ using Microsoft.ML.Data;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 using L8 = SixLabors.ImageSharp.PixelFormats.L8;
-// Simulation sim1 = new Simulation();
-// sim1.Simulate(3,30);
 
 Simulation2 simulator = new Simulation2();
+simulator.SimulateDeepLearning(1, 1);
+// KMeans(10, minLoops:10,downloadImages : true);
 
-double meanAcc = 0;
-for (int k = 10; k < 11; k++)
+void KMeans(int minK, int upperK = -1,int minLoops = 1, int testCount = 1,bool downloadImages = false)
 {
-
-    Console.WriteLine("Tests pour classification à {0} clusters",k);
-    for (int i = 0; i < 1; i++) // 10 tests for each value of K
-    {
-        Console.WriteLine("{0} % done",i*10);
-        simulator.Simulate(k,10);
-        meanAcc+=simulator.GetAccuracy();
-        //simulator.Reset();
-        Console.SetCursorPosition(0, Console.CursorTop - 1);
-        ClearCurrentConsoleLine();
-    }
-    meanAcc /= 10d;
-    Console.WriteLine("Mean accuracy : {0} %",meanAcc);
-    Console.WriteLine("-------------------------------------------------------");
     string title;
-    foreach (Number item in simulator.Barycenters)
+    double meanAcc = 0;
+    if (upperK == -1)
+        upperK = minK + 1;
+    for (int k = minK; k < upperK; k++)
     {
-        title = "Barycentre " + Convert.ToString(-item.Id);
-        SaveImage(item.Pixels, title);
+
+        Console.WriteLine("Tests pour classification à {0} clusters",k);
+        for (int i = 0; i < testCount; i++) // 10 tests for each value of K
+        {
+            Console.WriteLine("{0} % done",i*10);
+            simulator.SimulateKMeans(k,minLoops);
+            meanAcc+=simulator.GetAccuracy();
+            if (i != testCount-1)
+                simulator.Reset();
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
+            ClearCurrentConsoleLine();
+        }
+        
+        meanAcc /= 10d;
+        Console.WriteLine("Mean accuracy : {0} %",meanAcc);
+        Console.WriteLine("-------------------------------------------------------");
+        if (downloadImages)
+        {
+            Console.WriteLine("coucou");
+            foreach (Number item in simulator.Barycenters)
+            {
+                title = "Barycentre " + Convert.ToString(-item.Id);
+                SaveImage(item.Pixels, title);
+            }
+        }
     }
 }
 

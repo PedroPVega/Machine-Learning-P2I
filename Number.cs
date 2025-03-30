@@ -48,6 +48,14 @@ public class Number
         }
     }
 
+    public Number(Number num) // make copy of number
+    {
+        Pixels = num.Pixels;
+        Id = num.Id;
+        Label = num.Label;
+        DesignatedClass = num.DesignatedClass;
+    }
+
     public void FillInData(int[] vector, bool extractingData)
     {
 
