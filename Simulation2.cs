@@ -7,7 +7,7 @@ public class Simulation2
     public static int ImgSize = 784;
     public List<Number> Numbers {get; set;}
     public List<Number> Barycenters {get; set;}
-    static Random rdn = new Random();
+    protected Random rdn = new Random();
     public Simulation2()
     {
         // Load Data into list
@@ -34,8 +34,6 @@ public class Simulation2
         List<double[]> Biases = new List<double[]>();
         List<double[]> DeltaBiases = new List<double[]>();
 
-        // FILL MATRIXES
-        InitializeDeepLearning(l,L,hiddenLayers,Weights,Biases, DeltaWeights, DeltaBiases);
 
         
         // CHOOSE EXAMPLE
@@ -438,38 +436,6 @@ public class Simulation2
         {
             vect[i] = rdn.NextDouble();
         }
-    }
-
-    public void InitializeDeepLearning(int l, int L, double[][] HL, List<double[,]> W, List<double[]> B, List<double[,]> dW, List<double[]> dB)
-    {
-        Console.WriteLine("Initializing matrixes and vectors");
-        for (int i = 0; i < HL.GetLength(0); i++)
-        {
-            HL[i] = new double[l];
-        }
-        FillRandomblyMatrix2(HL);
-        W.Add(new double[ImgSize,L]);
-        dW.Add(new double[ImgSize,L]);
-        B.Add(new double[L]);
-        dB.Add(new double[L]);
-        FillRandomblyVector(B[0]);
-        for (int i = 1; i < l; i++)
-        {
-            W.Add(new double[L,L]);
-            dW.Add(new double[L,L]);
-            FillRandomblyMatrix(W[i]);
-            B.Add(new double[L]);
-            dB.Add(new double[L]);
-            FillRandomblyVector(B[i]);
-        }
-        W.Add(new double[L,10]);
-        dW.Add(new double[L,10]);
-        FillRandomblyMatrix(W[l]);
-        B.Add(new double[10]);
-        dB.Add(new double[10]);
-        FillRandomblyVector(B[l]);
-        Console.Clear();
-        Console.WriteLine("Neural Network Initialized !!");
     }
 
     public double[] Predict(double[] vector, double[][] HL, List<double[,]> W, List<double[]> B)

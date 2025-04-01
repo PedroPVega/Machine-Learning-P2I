@@ -6,9 +6,14 @@ using Microsoft.ML.Data;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 using L8 = SixLabors.ImageSharp.PixelFormats.L8;
+using Unsupervised_Learning;
 
 Simulation2 simulator = new Simulation2();
-simulator.SimulateDeepLearning(1, 1);
+
+DeepLearner Torch = new DeepLearner(20000,1);
+Torch.InitializeDeepLearning();
+Torch.Train();
+//simulator.SimulateDeepLearning(1, 1);
 // KMeans(10, minLoops:10,downloadImages : true);
 
 void KMeans(int minK, int upperK = -1,int minLoops = 1, int testCount = 1,bool downloadImages = false)

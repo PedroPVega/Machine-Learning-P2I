@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/Unsupervised_Learning.csproj": {}
+    "/Users/ppvegaf/Documents/C# Projects/P2I/Unsupervised_Learning/Unsupervised_Learning.csproj": {}
   },
   "projects": {
-    "/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/Unsupervised_Learning.csproj": {
+    "/Users/ppvegaf/Documents/C# Projects/P2I/Unsupervised_Learning/Unsupervised_Learning.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/Unsupervised_Learning.csproj",
+        "projectUniqueName": "/Users/ppvegaf/Documents/C# Projects/P2I/Unsupervised_Learning/Unsupervised_Learning.csproj",
         "projectName": "Unsupervised_Learning",
-        "projectPath": "/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/Unsupervised_Learning.csproj",
+        "projectPath": "/Users/ppvegaf/Documents/C# Projects/P2I/Unsupervised_Learning/Unsupervised_Learning.csproj",
         "packagesPath": "/Users/ppvegaf/.nuget/packages/",
-        "outputPath": "/Users/ppvegaf/Documents/Projects/P2I/Unsupervised_Learning/obj/",
+        "outputPath": "/Users/ppvegaf/Documents/C# Projects/P2I/Unsupervised_Learning/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/ppvegaf/.nuget/NuGet/NuGet.Config"
