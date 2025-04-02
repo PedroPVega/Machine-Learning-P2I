@@ -18,73 +18,6 @@ public class Simulation2
         Console.Clear();
     }
 
-    public void SimulateDeepLearning(int l, int L)
-    {
-        /*
-        l : number of hidden layers
-        L : lenght of hidden layers
-        */
-
-        // DECLARING VARIABLES
-        double[][] hiddenLayers = new double[L][];
-        double[] finalLabels = new double[10];
-        double cost;
-        List<double[,]> Weights = new List<double[,]>();
-        List<double[,]> DeltaWeights = new List<double[,]>();
-        List<double[]> Biases = new List<double[]>();
-        List<double[]> DeltaBiases = new List<double[]>();
-
-
-        
-        // CHOOSE EXAMPLE
-        Number example = Numbers[0];
-        Console.WriteLine("this number is a {0}",example.Label);
-
-        // PREDICT EXAMPLE
-        
-        double[] vect = new double[ImgSize];
-        for (int i = 0; i < ImgSize; i++)
-        {
-            vect[i] = example.Pixels[i]/255d;        
-        }
-        //Console.WriteLine("integers converted to doubles");
-        finalLabels = Predict(vect,hiddenLayers,Weights,Biases);
-        cost = GetError(example.Label,finalLabels);
-        //PrintArray(finalLabels);
-        //Console.WriteLine("Erreur de la prediction : {0}",GetError(example.Label,finalLabels));
-        
-        /*
-        // AVERAGE COST
-        double avrCost = GetAverageCost(hiddenLayers,Weights,Biases);
-        Console.WriteLine("Coût moyen des predictions : {0}",avrCost);
-        */
-
-        // WEIGHTS FOR 1 NUMBER 1 LAYER OF 1 NEURON
-        double[,] dw1 = DeltaWeights[1];
-        double[,] w1 = Weights[1];
-        double[] b1 = Biases[1];
-        double[] db1 = DeltaBiases[1];
-        double temp;
-        // Console.WriteLine("nombre de matrices de poids {0} ; nombre de vecteurs biais {1}", Weights.Count, Biases.Count);
-        for (int i = 0; i < finalLabels.Length; i++)
-        {
-            if (i == example.Label)
-            {
-                temp = 2 * (finalLabels[i] - 1) * (d_dx_Sigmoid(w1[0,0]) * hiddenLayers[0][0] + b1[0]);
-                dw1[0,i] = temp * hiddenLayers[0][0];
-                db1[i] = temp;
-            }
-            else
-            {
-                temp = 2 * (finalLabels[i] - 0) * (d_dx_Sigmoid(w1[0,0]) * hiddenLayers[0][0] + b1[0]);
-                dw1[0,i] = temp * hiddenLayers[0][0];
-                db1[i] = temp;
-            }
-            Console.WriteLine("dw1[{0},1] = {1}    ; db1[{0}] = {2} ",i,Math.Round(dw1[0,i],2),Math.Round(db1[i],2));
-        }
-        
-    }
-
     public void SimulateKMeans(int K, int iterations)
     {
         CreateRandomBarycenters(K);
@@ -419,16 +352,7 @@ public class Simulation2
         }
     }
 
-    public void FillRandomblyMatrix(double[,] mat)
-    {
-        for (int i = 0; i < mat.GetLength(0); i++)
-        {
-            for (int j = 0; j < mat.GetLength(1); j++)
-            {
-                mat[i,j] = rdn.NextDouble();
-            }
-        }
-    }
+    
 
     public void FillRandomblyVector(double[] vect)
     {
@@ -437,120 +361,6 @@ public class Simulation2
             vect[i] = rdn.NextDouble();
         }
     }
-
-    public double[] Predict(double[] vector, double[][] HL, List<double[,]> W, List<double[]> B)
-    {
-        // DECLARING VARIABLES
-        double[,] wi; // weight i
-        double[] bi; // biais i
-        double[] prediction = new double[10];
-        int L = HL.Length; // depth of hidden layer
-        int l = HL[0].Length; // number of hidden layers
-
-        // FIRST COLUMN
-        wi = W[0];
-        bi = B[0];
-        //Console.WriteLine("Starting layer 0");
-        for (int h = 0; h < L; h++)
-        {
-            for (int j = 0; j < ImgSize; j++)
-            {
-                HL[h][0] += wi[j,h] * vector[j];
-            }
-            //PrintArray(bi);
-            HL[h][0] = Sigmoid(HL[h][0] + bi[h]);
-        }
-        //PrintJaggedArray(HL);
-        //Console.WriteLine("Layer 0 done with sigmoid");
-
-        // SECOND COLUMN THROUGH l COLUMN
-        for (int i = 1; i < l; i++) 
-        {
-            //Console.WriteLine("Starting layer {0}",i);
-            // FOREACH HIDDEN LAYER
-            wi = W[i];
-            bi = B[i];
-            for (int h = 0; h < L; h++)
-            {
-                for (int j = 0; j < L; j++)
-                {
-                    HL[h][i] += wi[j,h] * HL[h][i-1];
-                }
-                //PrintArray(bi);
-                HL[h][i] = Sigmoid(HL[h][i] + bi[h]);
-            }
-            //Console.WriteLine("Layer {0} done without sigmoid",i);
-            //PrintJaggedArray(HL);
-            //Console.WriteLine("Layer {0} done with sigmoid",i);
-        }
-
-        // LAST COLUMN
-        wi = W[W.Count-1];
-        bi = B[B.Count-1];
-        //Console.WriteLine("Starting last layer");
-        for (int h = 0; h < prediction.Length; h++)
-        {
-            for (int j = 0; j < L; j++)
-            {
-                prediction[h] += wi[j,h] * HL[j][HL[j].Length-1];
-            }
-            //PrintArray(bi);
-            prediction[h] = Sigmoid(prediction[h] + bi[h]);
-        }
-        //PrintJaggedArray(HL);
-        //Console.WriteLine("Last layer done with sigmoid");
-        return prediction;
-    }
-
-    public double GetError(int label, double[] prediction)
-    {
-        double error = 0;
-        for (int i = 0; i < prediction.Length; i++)
-        {
-            if (i == label)
-            {
-                error += Math.Pow(1-prediction[i],2);
-            }
-            else
-            {
-                error += Math.Pow(prediction[i],2);
-            }
-        }
-        return error;
-    }
-
-    public double GetAverageCost(double[][] HL, List<double[,]> W, List<double[]> B)
-    {
-        double sumCost = 0;
-        double[] vect = new double[ImgSize];
-        foreach (Number num in Numbers)
-        {
-            for (int i = 0; i < ImgSize; i++)
-            {
-                vect[i] = num.Pixels[i]/255d;        
-            }
-            //PrintArray(finalLabels);
-            sumCost += GetError(num.Label,Predict(vect,HL,W,B));
-        }
-        return sumCost / Numbers.Count;
-    }
-
-    public void BackPropagation()
-    {
-
-    }
-
-    public double Sigmoid(double x)
-    {
-        return 1 / (1 + Math.Exp(-x));
-    }
-
-    public double d_dx_Sigmoid(double x)
-    {
-        double term = Math.Exp(-x);
-        return term / Math.Pow(term + 1,2);
-    }
-
     static void PrintJaggedArray(double[][] jaggedArray)
     {
         for (int i = 0; i < jaggedArray.Length; i++)

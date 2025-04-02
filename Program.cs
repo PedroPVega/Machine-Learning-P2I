@@ -10,9 +10,9 @@ using Unsupervised_Learning;
 
 Simulation2 simulator = new Simulation2();
 
-DeepLearner Torch = new DeepLearner(20000,1);
+DeepLearner Torch = new DeepLearner(16,1);
 Torch.InitializeDeepLearning();
-Torch.Train();
+Torch.Train(10, 32, 0.001);
 //simulator.SimulateDeepLearning(1, 1);
 // KMeans(10, minLoops:10,downloadImages : true);
 
