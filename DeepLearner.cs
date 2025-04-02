@@ -1,7 +1,7 @@
 namespace Unsupervised_Learning;
 public class DeepLearner : Simulation2
 {
-    static double Epsilon = 0.00000001d;
+    static double Epsilon = 0.0000000001d;
     private List<double[,]> W {get; set;}
     private List<double[,]> dW {get; set;}
     private List<double[]> B {get; set;}
@@ -35,9 +35,9 @@ public class DeepLearner : Simulation2
         dW.Add(new double[L,ImgSize]);
         B.Add(new double[L]);
         dB.Add(new double[L]);
-        FillRandomblyVector(B[0]);
-        FillRandomblyMatrix(W[0]);
-        //XavierInitializationMatrix(W[0]);
+        //FillRandomblyMatrix(W[0]);
+        XavierInitializationMatrix(W[0]);
+        InitializeBiasColumn(B[0]);
         for (int i = 1; i < l; i++)
         {
             W.Add(new double[L,L]);
@@ -46,9 +46,9 @@ public class DeepLearner : Simulation2
             B.Add(new double[L]);
             dB.Add(new double[L]);
 
-            FillRandomblyMatrix(W[i]);
-            //XavierInitializationMatrix(W[i]);
-            FillRandomblyVector(B[i]);
+            //FillRandomblyMatrix(W[i]);
+            XavierInitializationMatrix(W[i]);
+            InitializeBiasColumn(B[i]);
         }
         W.Add(new double[10,L]);
         dW.Add(new double[10,L]);
@@ -56,11 +56,12 @@ public class DeepLearner : Simulation2
         B.Add(new double[10]);
         dB.Add(new double[10]);
 
-        FillRandomblyMatrix(W[l]);
-        //XavierInitializationMatrix(W[l]);
-        FillRandomblyVector(B[l]);
+        //FillRandomblyMatrix(W[l]);
+        XavierInitializationMatrix(W[l]);
+        InitializeBiasColumn(B[l]);
         Console.Clear();
         Console.WriteLine("Neural Network Initialized !!");
+        //FillWeights();
     }
     public double[] ForwardRandom()
     {
@@ -81,6 +82,8 @@ public class DeepLearner : Simulation2
         double[,] wi; // weight i
         double[] bi; // biais i
         double[] prediction = new double[10];
+        //Console.WriteLine("There are {0} weight matrixes",W.Count);
+        //Console.WriteLine("There are {0} biais columns",B.Count);
 
         // FIRST COLUMN
         wi = W[0];
@@ -132,14 +135,26 @@ public class DeepLearner : Simulation2
             for (int j = 0; j < L; j++)
             {
                 prediction[h] += wi[h,j] * A[l-1][j];
+                if (wi[h,j] == 0.0)
+                {
+                    //Console.WriteLine("ERREUR");
+                }
             }
             prediction[h] += bi[h];
         }
         //Console.WriteLine("longueur de la prediction : {0}", prediction.Length);
+        double min = prediction.Min();
+        double max = prediction.Max();
+        //Console.WriteLine("minimum of z2 : {0} ; maximum of z2 : {1}", min, max);
+        //Console.WriteLine("output layer before softmax");
+        //PrintArray(prediction);
         prediction = SoftMax(prediction);
-        if (prediction.Sum() > 1)
+        //Console.WriteLine("output layer after softmax");
+        //PrintArray(prediction);
+        if (Math.Round(prediction.Sum()) != 1)
         {
-            Console.WriteLine("ERROR");
+            Console.WriteLine("ERROR {0}",prediction.Sum());
+            PrintArray(prediction);
         }
         //Console.WriteLine("Forward Pass finished");
         //Console.WriteLine("longueur de la prediction : {0}", prediction.Length);
@@ -150,7 +165,7 @@ public class DeepLearner : Simulation2
         // WEIGHTS FOR 1 NUMBER 1 LAYER OF 1 NEURON
         double[] vect_label = new double[y.Length];
         vect_label[Num.Label] = 1d;
-        double loss = CrossEntropyLoss(Num.Label,y);
+        double loss = CrossEntropyLoss(vect_label,y);
         double[] delta2 = new double[y.Length];
         double[] delta1 = new double[L];
 
@@ -158,15 +173,15 @@ public class DeepLearner : Simulation2
         for (int i = 0; i < delta2.Length; i++)
             delta2[i] = y[i] - vect_label[i];
 
-        for (int h = 0; h < L; h++)
+        for (int i = 0; i < y.Length; i++)
         {
-            for (int i = 0; i < y.Length; i++)
+            dB[l][i] += delta2[i];
+            for (int h = 0; h < L; h++)
             {
                 //Console.WriteLine("{0} x {1}",dW[l].GetLength(0),dW[l].GetLength(1));
                 //Console.WriteLine("h = {0} ; i = {1}", h,i);
                 //Console.WriteLine("{0}",dW[l][i,h]);
                 dW[l][i,h] += delta2[i] * A[l-1][h];
-                dB[l][i] += delta2[i];
             }
         }
         
@@ -185,21 +200,21 @@ public class DeepLearner : Simulation2
 
         for (int h = 0; h < L; h++)
         {
+            dB[0][h] += delta1[h];
             for (int i = 0; i < ImgSize; i++)
             {
                 dW[0][h,i] += delta1[h] * Num.Pixels[i];
-                dB[0][h] += delta1[h];
             }
         }
         //Console.WriteLine("Backwards Pass Completed");
         return loss;
     }
-    public double CrossEntropyLoss(int label, double[] prediction)
+    public double CrossEntropyLoss(double[] vect_label, double[] prediction)
     {
         double L = 0;
         for (int i = 0; i < prediction.Length; i++)
         {
-            L += label*Math.Log(prediction[i] + Epsilon);
+            L += vect_label[i]*Math.Log(prediction[i] + Epsilon);
         }
         //Console.WriteLine("Loss for this number : {0}",Math.Round(-L,4));
         return - L;
@@ -251,6 +266,7 @@ public class DeepLearner : Simulation2
         Backwards(num, pred);
         */
         List<List<Number>> Batches = GetBatches(nbEpochs,batchSize);
+        List<Number> batch0 = Batches[0];
         double[] y = new double[10];
         int counter = 1;
         double lr = learningRate;
@@ -258,7 +274,8 @@ public class DeepLearner : Simulation2
         double acc = 0;
         foreach (List<Number> batch in Batches)
         {
-            foreach (Number num in batch)
+            
+            foreach (Number num in batch0)
             {
                 y = Forward(NormalizeVector(num.Pixels));
                 if (Math.Round(y.Sum()) != 1)
@@ -266,12 +283,14 @@ public class DeepLearner : Simulation2
                     Console.WriteLine("ERROR {0}",y.Sum());
                     PrintArray(y);
                 }
-                if (GetPrediction(y) == num.Label)
-                {
-                    acc += 1;
-                }
+                if (GetPrediction(y) == num.Label) { acc += 1; }
                 lossOverTime += Backwards(num,y);
+                //Console.WriteLine("The number was a {0}",num.Label);
             }
+            
+            
+            //ShowWeights();
+            //PrintArray(y);
             lossOverTime /= batchSize;
             acc = acc / batchSize * 100;
             SetAverageGradient(batchSize);
@@ -281,6 +300,7 @@ public class DeepLearner : Simulation2
             lr *= 0.95;
             lossOverTime = 0;
             acc = 0;
+            
         }
     }
 
@@ -290,12 +310,12 @@ public class DeepLearner : Simulation2
         {
             for (int i = 0; i < W[t].GetLength(0); i++)
             {
+                B[t][i] -= lR * dB[t][i];
                 for (int j = 0; j < W[t].GetLength(1); j++)
                 {
                     //Console.WriteLine("valeur avant : {0}",W[t][i,j]);
                     //Console.WriteLine("gradient : {0}",dW[t][i,j]);
                     W[t][i,j] -= lR * dW[t][i,j];
-                    B[t][i] -= lR * dB[t][i];
                     //Console.WriteLine("valeur apres : {0}",W[t][i,j]);
                 }
             }
@@ -308,10 +328,10 @@ public class DeepLearner : Simulation2
         {
             for (int i = 0; i < W[t].GetLength(0); i++)
             {
+                dB[t][i] = 0;
                 for (int j = 0; j < W[t].GetLength(1); j++)
                 {
-                    W[t][i,j] = 0;
-                    B[t][i] = 0;
+                    dW[t][i,j] = 0;
                 }
             }
         }
@@ -373,7 +393,8 @@ public class DeepLearner : Simulation2
         {
             for (int j = 0; j < mat.GetLength(1); j++)
             {
-                mat[i,j] = rdn.NextDouble();
+                //mat[i,j] = rdn.NextDouble();
+                mat[i,j] = 0.3;
             }
         }
     }
@@ -386,15 +407,50 @@ public class DeepLearner : Simulation2
         PARAMETERS : 
         - mat : weight matrix to fill
         */
-        double fanIn = mat.GetLength(1);
-        double fanOut = mat.GetLength(0);
-        double denominator = Math.Sqrt(fanIn + fanOut);
-        double sqrtSix = Math.Sqrt(6);
+        double fact = Math.Sqrt(1/ mat.GetLength(1));
         for (int i = 0; i < mat.GetLength(0); i++)
         {
             for (int j = 0; j < mat.GetLength(1); j++)
             {
-                mat[i,j] = rdn.NextDouble() * (-sqrtSix / denominator);
+                mat[i,j] = ((rdn.Next(10)-5)/10) * fact;
+            }
+        }
+    }
+    public void InitializeBiasColumn(double[] vect)
+    {
+        for (int i = 0; i < vect.Length; i++)
+        {
+            vect[i] = 0.01;
+        }
+    }
+
+    public void FillWeights()
+    {
+        foreach (double[,] w in W)
+        {
+            for (int i = 0; i < w.GetLength(0); i++)
+            {
+                for (int j = 0; j < w.GetLength(1); j++)
+                {
+                    w[i,j] = 0.3d;
+                }
+            }
+        }
+    }
+    public void ShowWeights()
+    {
+        foreach (double[,] w in dW)
+        {
+            int rows = w.GetLength(0);
+            int cols = w.GetLength(1);
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    Console.Write(w[i, j] + "\t"); // Print with tab spacing
+                }
+                Console.WriteLine("///////////////////////////////"); // Move to next line
             }
         }
     }

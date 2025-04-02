@@ -354,13 +354,7 @@ public class Simulation2
 
     
 
-    public void FillRandomblyVector(double[] vect)
-    {
-        for (int i = 0; i < vect.Length; i++)
-        {
-            vect[i] = rdn.NextDouble();
-        }
-    }
+    
     static void PrintJaggedArray(double[][] jaggedArray)
     {
         for (int i = 0; i < jaggedArray.Length; i++)
