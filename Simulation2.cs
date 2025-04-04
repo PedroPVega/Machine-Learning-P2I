@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Reflection.Emit;
+using Unsupervised_Learning;
 
 public class Simulation2 
 {
@@ -13,9 +14,12 @@ public class Simulation2
         // Load Data into list
         Numbers = new List<Number> {};
         Barycenters = new List<Number> {};
-        Console.WriteLine("Loading data");
-        LoadData();
-        Console.Clear();
+        if (this is not DeepLearner)
+        {
+            Console.WriteLine("Loading data");
+            LoadData();
+            Console.Clear();
+        }
     }
 
     public void SimulateKMeans(int K, int iterations)
@@ -170,7 +174,7 @@ public class Simulation2
         }
     }
 
-    public void LoadData()
+    public virtual void LoadData()
     {
         string[]? values;
         int[] vector = new int[785];
@@ -178,7 +182,7 @@ public class Simulation2
         using (StreamReader reader = new StreamReader(filePath))
         {
             string? line = reader.ReadLine(); // Ignore first line, titles
-            for (int i = 0; i < 12000; i++) // Load first 12000 numbers
+            for (int i = 0; i < 320; i++) // Load first 3200 numbers
             {
                 
                     line = reader.ReadLine();  // Read line

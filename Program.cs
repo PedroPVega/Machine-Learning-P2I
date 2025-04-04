@@ -10,11 +10,21 @@ using Unsupervised_Learning;
 
 Simulation2 simulator = new Simulation2();
 
-DeepLearner Torch = new DeepLearner(15,1);
-Torch.InitializeDeepLearning();
-Torch.Train(700, 10, 0.08);
-//simulator.SimulateDeepLearning(1, 1);
+//DeepLearner Torch = new DeepLearner(128,1,0.01);
+//Torch.InitializeDeepLearning();
+//Torch.Fit(Torch.XTrain_YTrain, 100, 16);
+// simulator.SimulateDeepLearning(1, 1);
 // KMeans(10, minLoops:10,downloadImages : true);
+Simulation2 Km = new Simulation2();
+
+List<Number> liste = new List<Number>();
+string title;
+for (int i = 0; i < 20; i++)
+{
+    liste.Add(Km.Numbers[i]);
+    title = "chiffre ";
+    SaveImage(liste[i].Pixels, title + Convert.ToString(i));
+}
 
 void KMeans(int minK, int upperK = -1,int minLoops = 1, int testCount = 1,bool downloadImages = false)
 {

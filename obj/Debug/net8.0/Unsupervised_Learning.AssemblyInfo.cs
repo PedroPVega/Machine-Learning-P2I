@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Unsupervised_Learning")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d12d875b081bc44410c51597b5d204a466f0bbc8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4e3d6f17e0baee63a4995ac3607128d1a8458ec6")]
 [assembly: System.Reflection.AssemblyProductAttribute("Unsupervised_Learning")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Unsupervised_Learning")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
