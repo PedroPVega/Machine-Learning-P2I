@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "Ng+q/NsDyzc=",
+  "dgSpecHash": "mzGceObJUTM=",
   "success": true,
   "projectFilePath": "/Users/ppvegaf/Documents/C# Projects/P2I/Unsupervised_Learning/Unsupervised_Learning.csproj",
   "expectedPackageFiles": [
     "/Users/ppvegaf/.nuget/packages/csvhelper/33.0.1/csvhelper.33.0.1.nupkg.sha512",
+    "/Users/ppvegaf/.nuget/packages/encog-dotnet-core/3.4.0/encog-dotnet-core.3.4.0.nupkg.sha512",
     "/Users/ppvegaf/.nuget/packages/microsoft.io.recyclablememorystream/3.0.1/microsoft.io.recyclablememorystream.3.0.1.nupkg.sha512",
     "/Users/ppvegaf/.nuget/packages/microsoft.ml/4.0.2/microsoft.ml.4.0.2.nupkg.sha512",
     "/Users/ppvegaf/.nuget/packages/microsoft.ml.cpumath/4.0.2/microsoft.ml.cpumath.4.0.2.nupkg.sha512",
@@ -21,5 +22,16 @@
     "/Users/ppvegaf/.nuget/packages/system.reflection.emit.lightweight/4.7.0/system.reflection.emit.lightweight.4.7.0.nupkg.sha512",
     "/Users/ppvegaf/.nuget/packages/system.threading.channels/8.0.0/system.threading.channels.8.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'encog-dotnet-core 3.4.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
+      "libraryId": "encog-dotnet-core",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }

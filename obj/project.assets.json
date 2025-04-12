@@ -15,6 +15,15 @@
           }
         }
       },
+      "encog-dotnet-core/3.4.0": {
+        "type": "package",
+        "compile": {
+          "lib/encog-core-cs.dll": {}
+        },
+        "runtime": {
+          "lib/encog-core-cs.dll": {}
+        }
+      },
       "Microsoft.IO.RecyclableMemoryStream/3.0.1": {
         "type": "package",
         "compile": {
@@ -419,6 +428,18 @@
         "lib/netstandard2.0/CsvHelper.xml",
         "lib/netstandard2.1/CsvHelper.dll",
         "lib/netstandard2.1/CsvHelper.xml"
+      ]
+    },
+    "encog-dotnet-core/3.4.0": {
+      "sha512": "WUacWTVw9zGQlmYVAKdULn5pAG2XcnfhVaYNURLNBZtsRgoXRmXORH0HJigaXaT+x61cp/6XoOcajd5X++wLtg==",
+      "type": "package",
+      "path": "encog-dotnet-core/3.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "encog-dotnet-core.3.4.0.nupkg.sha512",
+        "encog-dotnet-core.nuspec",
+        "lib/encog-core-cs.dll"
       ]
     },
     "Microsoft.IO.RecyclableMemoryStream/3.0.1": {
@@ -869,6 +890,7 @@
   "projectFileDependencyGroups": {
     "net8.0": [
       "CsvHelper >= 33.0.1",
+      "Encog-dotnet-core >= 3.4.0",
       "Microsoft.ML >= 4.0.2",
       "SixLabors.ImageSharp.Web >= 3.1.4",
       "System.Drawing.Common >= 9.0.3"
@@ -920,6 +942,10 @@
             "target": "Package",
             "version": "[33.0.1, )"
           },
+          "Encog-dotnet-core": {
+            "target": "Package",
+            "version": "[3.4.0, )"
+          },
           "Microsoft.ML": {
             "target": "Package",
             "version": "[4.0.2, )"
@@ -952,5 +978,17 @@
         "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.404/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'encog-dotnet-core 3.4.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
+      "libraryId": "encog-dotnet-core",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }

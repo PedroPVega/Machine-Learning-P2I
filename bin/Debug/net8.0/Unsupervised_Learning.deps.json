@@ -9,6 +9,7 @@
       "Unsupervised_Learning/1.0.0": {
         "dependencies": {
           "CsvHelper": "33.0.1",
+          "encog-dotnet-core": "3.4.0",
           "Microsoft.ML": "4.0.2",
           "SixLabors.ImageSharp.Web": "3.1.4",
           "System.Drawing.Common": "9.0.3"
@@ -22,6 +23,14 @@
           "lib/net8.0/CsvHelper.dll": {
             "assemblyVersion": "33.0.0.0",
             "fileVersion": "33.0.1.24"
+          }
+        }
+      },
+      "encog-dotnet-core/3.4.0": {
+        "runtime": {
+          "lib/encog-core-cs.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.3.0.0"
           }
         }
       },
@@ -254,6 +263,13 @@
       "sha512": "sha512-fev4lynklAU2A9GVMLtwarkwaanjSYB4wUqO2nOJX5hnzObORzUqVLe+bDYCUyIIRQM4o5Bsq3CcyJR89iMmEQ==",
       "path": "csvhelper/33.0.1",
       "hashPath": "csvhelper.33.0.1.nupkg.sha512"
+    },
+    "encog-dotnet-core/3.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-WUacWTVw9zGQlmYVAKdULn5pAG2XcnfhVaYNURLNBZtsRgoXRmXORH0HJigaXaT+x61cp/6XoOcajd5X++wLtg==",
+      "path": "encog-dotnet-core/3.4.0",
+      "hashPath": "encog-dotnet-core.3.4.0.nupkg.sha512"
     },
     "Microsoft.IO.RecyclableMemoryStream/3.0.1": {
       "type": "package",

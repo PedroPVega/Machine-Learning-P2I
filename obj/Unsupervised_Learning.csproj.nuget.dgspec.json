@@ -47,6 +47,10 @@
               "target": "Package",
               "version": "[33.0.1, )"
             },
+            "Encog-dotnet-core": {
+              "target": "Package",
+              "version": "[3.4.0, )"
+            },
             "Microsoft.ML": {
               "target": "Package",
               "version": "[4.0.2, )"

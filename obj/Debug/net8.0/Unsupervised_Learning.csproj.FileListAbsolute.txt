@@ -96,3 +96,4 @@
 /Users/ppvegaf/Documents/C# Projects/P2I/Unsupervised_Learning/obj/Debug/net8.0/Unsupervised_Learning.pdb
 /Users/ppvegaf/Documents/C# Projects/P2I/Unsupervised_Learning/obj/Debug/net8.0/Unsupervised_Learning.genruntimeconfig.cache
 /Users/ppvegaf/Documents/C# Projects/P2I/Unsupervised_Learning/obj/Debug/net8.0/ref/Unsupervised_Learning.dll
+/Users/ppvegaf/Documents/C# Projects/P2I/Unsupervised_Learning/bin/Debug/net8.0/encog-core-cs.dll
